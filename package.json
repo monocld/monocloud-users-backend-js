@@ -1,6 +1,6 @@
 {
   "name": "@monocloud/users-backend-js",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "MonoCloud Users Backend JavaScript SDK",
   "keywords": [
     "monocloud",
@@ -36,7 +36,7 @@
     "test": "eslint tests --fix --quiet && jest"
   },
   "dependencies": {
-    "@monocloud/sdk-js-core": "0.2.7"
+    "@monocloud/sdk-js-core": "0.2.8"
   },
   "devDependencies": {
     "@types/jest": "29.5.12",

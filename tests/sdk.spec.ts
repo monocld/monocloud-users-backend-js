@@ -284,4 +284,57 @@ describe('MonoCloud Users Backed SDK Tests', () => {
 
     expect(result.status).toBe(204);
   });
+
+  test('Problem json content type with any suffix should handle correctly', async () => {
+    nockInst.post('/api/users').reply(
+      422,
+      {
+        type: 'https://httpstatuses.io/422#validation-error',
+        title: 'Unprocessable Entity',
+        status: 422,
+        errors: {
+          name: ['Invalid Name'],
+          password: ['Invalid Password'],
+        },
+        traceId: '00-cd3f24e893675e2dae242875e99e7c85-296286fe1c04c085-01',
+      },
+      { 'Content-Type': 'application/problem+json#suffix' }
+    );
+
+    try {
+      await client.createUser({});
+      throw new Error('Invalid');
+    } catch (error: unknown) {
+      expect(error).toBeInstanceOf(MonoCloudKeyValidationException);
+      const err = error as MonoCloudKeyValidationException;
+      expect(err.message).toContain('Unprocessable Entity');
+      expect(Object.keys(err.errors).length).toBe(2);
+      expect(err.errors.name?.[0]).toBe('Invalid Name');
+      expect(err.errors.password?.[0]).toBe('Invalid Password');
+      expect(err.response).not.toBeFalsy();
+      expect(err.response!.type).toBe(
+        'https://httpstatuses.io/422#validation-error'
+      );
+      expect(err.response!.title).toBe('Unprocessable Entity');
+      expect(err.response!.status).toBe(422);
+      expect(err.response!.traceId).toBe(
+        '00-cd3f24e893675e2dae242875e99e7c85-296286fe1c04c085-01'
+      );
+    }
+  });
+
+  test('Should return proper response instance on success', async () => {
+    nockInst.get('/api/users').reply(200, [{}, {}, {}], {
+      header1: 'value1',
+      header2: 'value2',
+    });
+
+    const result = await client.getAllUsers();
+
+    expect(result.status).toBe(200);
+    expect(result.result.length).toBe(3);
+    expect(Object.keys(result.headers).length).toBeGreaterThan(2);
+    expect(result.headers.header1).toBe('value1');
+    expect(result.headers.header2).toBe('value2');
+  });
 });
