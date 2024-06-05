@@ -197,7 +197,7 @@ export class UsersClient extends MonoCloudClientBase {
    *
    * @summary Set email as primary
    * @param {string} userId User Id
-   * @param {string} identifierId The Id of the email to be set a primary.
+   * @param {string} identifierId The Id of the email to be set as primary.
    * @returns User - Successfully updated user\&#39;s primary email
    * @throws {MonoCloudException}
    * @memberof UsersClient
@@ -249,7 +249,7 @@ export class UsersClient extends MonoCloudClientBase {
    *
    * @summary Set phone as primary
    * @param {string} userId User Id
-   * @param {string} identifierId The Id of the phone to be set a primary.
+   * @param {string} identifierId The Id of the phone to be set as primary.
    * @returns User - Successfully updated user\&#39;s primary phone
    * @throws {MonoCloudException}
    * @memberof UsersClient
@@ -275,7 +275,7 @@ export class UsersClient extends MonoCloudClientBase {
    *
    * @summary Mark phone as verified
    * @param {string} userId User Id
-   * @param {string} identifierId The Id of the phone to be set verified.
+   * @param {string} identifierId The Id of the phone to be marked as verified.
    * @returns User - Success
    * @throws {MonoCloudException}
    * @memberof UsersClient
@@ -548,7 +548,7 @@ export class UsersClient extends MonoCloudClientBase {
    * @memberof UsersClient
    *
    */
-  public externalAuthenticatorDisconnectEndpoint(
+  public externalAuthenticatorDisconnect(
     userId: string,
     externalAuthenticatorDisconnectRequest: ExternalAuthenticatorDisconnectRequest
   ): Promise<MonoCloudResponse<User>> {

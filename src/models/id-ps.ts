@@ -45,6 +45,10 @@ export const IdPs = {
    *
    */
   Linkedin: 'linkedin',
+  /**
+   *
+   */
+  Xero: 'xero',
 } as const;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
